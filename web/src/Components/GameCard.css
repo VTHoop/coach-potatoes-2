@@ -1,0 +1,15 @@
+.stripe-green:nth-child(odd) {
+    background-color: rgba(0, 100, 0, .2);
+}
+
+.logo {
+    display: block;
+    max-width:200px; 
+    max-height:200px; 
+    margin-top: -7px; 
+    margin-bottom: 10px
+}
+
+@media screen and (min-width: 0px) and (max-width: 720px) {
+    .mobile-hide{ display: none; }
+  }

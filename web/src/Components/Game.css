@@ -1,0 +1,8 @@
+.toggleContainer {
+    height: 56;
+    padding: 4px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0px 0;
+  }

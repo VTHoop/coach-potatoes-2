@@ -1,0 +1,41 @@
+version: '3.5'
+services:
+   flask-api:
+      build:
+         context: ./api
+         dockerfile: Dockerfile
+      ports:
+         - "4990:4990"
+      volumes:
+         - .:/hht
+      environment:
+         - ENV=production
+         - PORT=4990
+         - MONGODB_URI_RCP=mongodb://mongodb:27017/couchpotatoes
+   mongodb:
+      image: mongo:latest
+      container_name: "mongodb"
+      environment:
+         - MONGO_DATA_DIR=/usr/data/db
+         - MONGO_LOG_DIR=/dev/null
+      volumes:
+         - ./data/db:/usr/data/db
+      ports:
+         - 27017:27017
+      command: mongod --smallfiles --logpath=/dev/null # --quiet
+   client:
+    container_name: react-app
+    build:
+      context: ./web
+      dockerfile: Dockerfile-prod
+    volumes:
+      - './web:/usr/src/app'
+      - '/usr/src/app/node_modules'
+    ports:
+      - '80:80'
+    depends_on:
+      - "flask-api"
+    environment:
+      - NODE_ENV=production
+      - CHOKIDAR_USEPOLLING=true
+      - HOST_URL=http://192.168.99.100:5000

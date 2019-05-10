@@ -1,0 +1,28 @@
+.MuiToggleButton-root-144.MuiToggleButton-selected-146 {
+    background-color: #357edd75 !important;
+}
+
+.toggle-status-group {
+    align-items: center;
+    margin: 0 auto;
+}
+
+.beers-column{
+    align-items: center;
+    margin: 0 auto;
+    display: block !important;
+}
+
+
+
+@media only screen and (max-width: 767px) {
+    .toggle-status {
+        width: 100%;
+        border-bottom: 1px solid #357edd75 !important;
+        height: 1.5rem !important;
+        font-size: .75rem !important;
+        padding: 4px 4px !important;
+    }
+
+    
+}

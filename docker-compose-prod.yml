@@ -21,6 +21,8 @@ services:
          - ENV=production
          - PORT=4990
          - MONGODB_URI_RCP=mongodb://mongodb:27017/couchpotatoes
+         - MAILGUN_API=${MAILGUN_API}
+         - MAILGUN_URL=${MAILGUN_URL}
    mongodb:
       image: mongo:latest
       container_name: "mongodb"

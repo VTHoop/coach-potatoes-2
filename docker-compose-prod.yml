@@ -1,9 +1,18 @@
 version: '3.5'
 services:
    flask-api:
+      image: hoop/coachpotatoes-backend
       build:
          context: ./api
          dockerfile: Dockerfile
+      deploy:
+         replicas: 1
+         resources:
+            limits:
+               cpus: "0.1"
+               memory: 50M
+         restart_policy:
+            condition: on-failure
       ports:
          - "4990:4990"
       volumes:
@@ -15,6 +24,14 @@ services:
    mongodb:
       image: mongo:latest
       container_name: "mongodb"
+      deploy:
+         replicas: 1
+         resources:
+            limits:
+               cpus: "0.1"
+               memory: 50M
+         restart_policy:
+            condition: on-failure   
       environment:
          - MONGO_DATA_DIR=/usr/data/db
          - MONGO_LOG_DIR=/dev/null
@@ -24,18 +41,27 @@ services:
          - 27017:27017
       command: mongod --smallfiles --logpath=/dev/null # --quiet
    client:
-    container_name: react-app
-    build:
-      context: ./web
-      dockerfile: Dockerfile-prod
-    volumes:
-      - './web:/usr/src/app'
-      - '/usr/src/app/node_modules'
-    ports:
-      - '80:80'
-    depends_on:
-      - "flask-api"
-    environment:
-      - NODE_ENV=production
-      - CHOKIDAR_USEPOLLING=true
-      - HOST_URL=http://192.168.99.100:5000
+      container_name: react-app
+      image: hoop/coachpotatoes-frontend
+      build:
+         context: ./web
+         dockerfile: Dockerfile-prod
+      deploy:
+         replicas: 1
+         resources:
+            limits:
+               cpus: "0.1"
+               memory: 50M
+         restart_policy:
+            condition: on-failure      
+      volumes:
+         - './web:/usr/src/app'
+         - '/usr/src/app/node_modules'
+      ports:
+         - '80:80'
+      depends_on:
+         - "flask-api"
+      environment:
+         - NODE_ENV=production
+         - CHOKIDAR_USEPOLLING=true
+         - HOST_URL=http://192.168.99.100:5000

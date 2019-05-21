@@ -68,8 +68,8 @@ export default class GameCard extends Component {
 
   completeToBottom = (games) => {
     let final = []; 
-    const completeGames = games.filter(game => game.time === 'Complete');
-    const openGames = games.filter(game => game.time !== 'Complete');
+    const completeGames = games.filter(game => game.time === '');
+    const openGames = games.filter(game => game.time !== '');
     openGames.map(game => final.push(game));
     completeGames.map(game => final.push(game));
     return final; 

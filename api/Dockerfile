@@ -1,4 +1,4 @@
-FROM python:latest
+FROM python:3.6
 RUN apt-get update \
         && apt-get install -y \
             cron \
@@ -13,6 +13,4 @@ RUN chmod +x app.py
 ADD ./common/scripts/game_reminder.sh /etc/cron.hourly
 RUN cp /etc/cron.hourly/game_reminder.sh /etc/cron.hourly/game_reminder && \
     chmod +x /etc/cron.hourly/game_reminder
-RUN /etc/init.d/cron start && \
-    service rsyslog start
 ENTRYPOINT ["python", "app.py"]

@@ -23,8 +23,11 @@ def view_game(game_id):
                 player.save_to_mongo()
 
     players = Attendance.get_attendance_by_game(game_id)
-    # how_many = Attendance.yes_attendance_by_game(game_id)
-    attendance_json = [player.json() for player in players]
+    how_many = Attendance.yes_attendance_by_game(game_id)
+    players_json = [player.json() for player in players]
+    attendance_json = {"players": players_json,
+                       "how_many": len(how_many)
+                       }
     return jsonify(attendance_json)
 
     # return render_template("attendance/game_attendance.html", attendance=attendance, how_many=len(how_many))

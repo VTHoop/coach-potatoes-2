@@ -29,6 +29,8 @@ class AttendanceDialog extends Component {
         >
           <DialogTitle id="form-dialog-title">Game Attendance</DialogTitle>
           <DialogContent>
+          <div className="w-100 tc yes_number"><strong>{this.props.how_many}</strong> people say they're coming this game.</div>
+
             <table className="f6 w-100 mw8 center">
               <thead>
                 <tr>
@@ -48,6 +50,7 @@ class AttendanceDialog extends Component {
                 ))}
               </tbody>
             </table>
+
           </DialogContent>
           <DialogActions>
             <Button onClick={this.props.onClose} color="primary">

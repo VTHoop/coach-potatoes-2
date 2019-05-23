@@ -18,11 +18,12 @@ export default class GameCard extends Component {
     this.state = {
       games: [],
       attendance: [],
+      how_many: 0,
       gameDialogActive: false,
       currentGame: '',
     };
   }
-  apiBase = "http://68.183.30.13:4990";
+  apiBase = "http://localhost:4990";
   attendanceRoute = "attendance";
 
   componentDidMount() {
@@ -44,10 +45,12 @@ export default class GameCard extends Component {
     axios
       .get(`${this.apiBase}/${this.attendanceRoute}/${game._id}`)
       .then(res => {
-        const attendance = res.data;
+        const attendance = res.data['players'];
+        const how_many = res.data['how_many']
         attendance.sort(this.compareNums);
         attendance.sort(this.yesNoSort);
         this.setState({ attendance });
+        this.setState({ how_many });
       });
   };
 
@@ -126,6 +129,7 @@ export default class GameCard extends Component {
           onClose={this.handleClose}
           onSave={this.handleSave}
           updateAttendance={this.onAttendanceUpdate}
+          how_many={this.state.how_many}
         />
       </>
     );

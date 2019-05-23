@@ -53,15 +53,14 @@ class Game(object):
 
     @staticmethod
     def send_reminder():
-        # reminder_days_before_game = 4
+        reminder_days_before_game = 11
+        next_game = Game.get_next_game()
+        next_game_date = datetime.strptime(next_game.date, '%a %b %d')
+        next_game_date = next_game_date.replace(year=datetime.now().year)
 
-        # if (Game.get_next_game().date.date() - datetime.datetime.now().date()).days == reminder_days_before_game:
+        if (next_game_date.date() - datetime.datetime.now().date()).days == reminder_days_before_game:
             email_to = 'pat.hooper83@gmail.com'
 
-            next_game = Game.get_next_game()
-
-            next_game_date = datetime.strptime(next_game.date, '%a %b %d')
-            next_game_date = next_game_date.replace(year=datetime.now().year)
 
             template = jinja2.Template(GameConstants.templateHtml)
             html = template.render(date=next_game_date, venue=next_game.venue, opponent=next_game.opponent,

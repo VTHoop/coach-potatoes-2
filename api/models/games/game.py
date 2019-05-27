@@ -5,10 +5,9 @@ import uuid
 
 from common.database import Database
 import models.games.constants as GameConstants
+from models.emails.email import Email
 
 __author__ = 'hooper-p'
-
-
 
 
 class Game(object):
@@ -52,15 +51,22 @@ class Game(object):
                 return game
 
     @staticmethod
+    def get_email_list():
+        all_emails = Email.get_all_emails()
+        email_user_list = []
+        for email in all_emails:
+            email_user_list.append(email.email)
+        return ",".join(email_user_list)
+
+    @staticmethod
     def send_reminder():
-        reminder_days_before_game = 11
+        reminder_days_before_game = 2
         next_game = Game.get_next_game()
         next_game_date = datetime.strptime(next_game.date, '%a %b %d')
         next_game_date = next_game_date.replace(year=datetime.now().year)
 
-        if (next_game_date.date() - datetime.datetime.now().date()).days == reminder_days_before_game:
-            email_to = 'pat.hooper83@gmail.com'
-
+        if (next_game_date.date() - datetime.now().date()).days == reminder_days_before_game:
+            email_to = Game.get_email_list()
 
             template = jinja2.Template(GameConstants.templateHtml)
             html = template.render(date=next_game_date, venue=next_game.venue, opponent=next_game.opponent,

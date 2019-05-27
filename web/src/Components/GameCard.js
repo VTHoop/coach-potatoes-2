@@ -23,7 +23,7 @@ export default class GameCard extends Component {
       currentGame: '',
     };
   }
-  apiBase = "http://localhost:4990";
+  apiBase = "http://68.183.30.13:4990";
   attendanceRoute = "attendance";
 
   componentDidMount() {
